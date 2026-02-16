@@ -267,7 +267,7 @@
             </div>
             <div class="form-group">
                 <label for="cni">Numéro de la carte nationale d'identité (CNI) :</label>
-                <input type="text" id="cni" name="cni" pattern="\d{1,13}" maxlength="13" title="Le numéro CNI ne doit pas dépasser 13 chiffres" required>
+              <input type="text" id="cni" name="cni" pattern="(\d{1,13}|neant)" maxlength="13" title="Entrez un numéro CNI (max 13 chiffres)  ou 'neant' si vous n'avez pas encore de carte" required>
                 <span class="error-message">Ce champ est obligatoire et ne doit pas dépasser 13 chiffres.</span>
             </div>
             <div class="form-group">
@@ -433,10 +433,10 @@
                 } else if (input.type === 'tel' && !input.checkValidity()) {
                     input.nextElementSibling.style.display = 'block';
                     isValid = false;
-                } else if (input.name === 'cni' && !input.checkValidity()) {
-                    input.nextElementSibling.style.display = 'block';
-                    isValid = false;
-                }
+                }else if (input.name === 'cni' && !input.checkValidity()) {
+                input.nextElementSibling.style.display = 'block';
+                isValid = false;
+            }
             });
             
             // Vérifier les radios
@@ -491,6 +491,7 @@
 </body>
 
 </html>
+
 
 
 
