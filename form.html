@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire d'Inscription</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .header {
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(-50px) scale(0.8);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        .header.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(-30px) rotate(-10deg);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .logos.show {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg);
+        }
+        .logos img {
+            transition: transform 0.5s ease;
+            width: 120px;
+            height: 120px;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 7rem;
+            padding: 30px;
+        }
+        .logos.show img:hover {
+            transform: scale(1.1);
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        .form-container.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .form-group.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .form-group.show:nth-child(odd) {
+            animation: bounceInLeft 0.8s ease;
+        }
+        .form-group.show:nth-child(even) {
+            animation: bounceInRight 0.8s ease;
+        }
+        @keyframes bounceInLeft {
+            0% { transform: translateX(-100px); opacity: 0; }
+            50% { transform: translateX(10px); }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes bounceInRight {
+            0% { transform: translateX(100px); opacity: 0; }
+            50% { transform: translateX(-10px); }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="date"], input[type="tel"], select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1.2rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        input[type="text"]:focus, input[type="date"]:focus, input[type="tel"]:focus, select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            
+        }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .radio-group label, .checkbox-group label {
+            font-weight: normal;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+        .radio-group label:hover, .checkbox-group label:hover {
+            color: #007bff;
+        }
+        .signatures {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .signatures.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .signature {
+            width: 45%;
+            text-align: center;
+        }
+        .signature-line {
+            border-bottom: 1px solid #000;
+            margin-top: 50px;
+            padding-bottom: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .logos {
+                flex-direction: column;
+            }
+            .logos img {
+                width: 80px;
+                height: 80px;
+                margin: 10px 0;
+            }
+            .signatures {
+                flex-direction: column;
+            }
+            .signature {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .form-container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Archidiocese de Dakar </h2>
+        <h2>Doyenne de Pikine</h2>
+    </div>
+    <div class="logos">
+        <!-- Remplacer par les vrais logos -->
+        <img src="image0.jpeg" alt="Logo du Mouvement">
+        <img src="image2.jpg" alt="Logo de l'Église">
+    </div>
+    <h2 style="text-align: center; text-decoration: underline;">FICHE DE REISEIGNEMENT ET D'ENGAGEMENT PERSONNEL</h2>
+    <div class="form-container">
+        <form id="inscriptionForm">
+            <div class="form-group">
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="nom" required>
+                <span class="error-message">Ce champ est obligatoire.</span>
+            </div>
+            <div class="form-group">
+                <label for="prenom">Prénom :</label>
+                <input type="text" id="prenom" name="prenom" required>
+                <span class="error-message">Ce champ est obligatoire.</span>
+            </div>
+            <div class="form-group">
+                <label for="dateNaissance">Date de naissance :</label>
+                <input type="date" id="dateNaissance" name="dateNaissance" required>
+                <span class="error-message">Ce champ est obligatoire.</span>
+            </div>
+            <div class="form-group">
+                <label for="lieuNaissance">Lieu de naissance :</label>
+                <input type="text" id="lieuNaissance" name="lieuNaissance" required>
+                <span class="error-message">Ce champ est obligatoire.</span>
+            </div>
+            <div class="form-group">
+                <label>Groupe sanguin :</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="groupeSanguin" value="A+" required> A+</label>
+                    <label><input type="radio" name="groupeSanguin" value="A-" required> A-</label>
+                    <label><input type="radio" name="groupeSanguin" value="B+" required> B+</label>
+                    <label><input type="radio" name="groupeSanguin" value="B-" required> B-</label>
+                    <label><input type="radio" name="groupeSanguin" value="AB+" required> AB+</label>
+                    <label><input type="radio" name="groupeSanguin" value="AB-" required> AB-</label>
+                    <label><input type="radio" name="groupeSanguin" value="O+" required> O+</label>
+                    <label><input type="radio" name="groupeSanguin" value="O-" required> O-</label>
+                    <label><input type="radio" name="groupeSanguin" value="O-" required> pas encore connu</label>
+                </div>
+                <span class="error-message" id="groupeSanguinError" style="display: none;">Ce champ est obligatoire.</span>
+            </div>
+            <div class="form-group">
+                <label for="ficheSanitaire">Fiche sanitaire :</label>
+                <input type="text" id="ficheSanitaire" name="ficheSanitaire" required>
+                <span class="error-message">Ce champ est obligatoire.</span>
+            </div>
+            <div class="form-group">
+                <label for="adresse">Adresse :</label>
+                <input type="text" id="adresse" name="adresse" required>
+                <span class="error-message">Ce champ est obligatoire.</span>
+            </div>
+            <div class="form-group">
+                <label for="telephone">Téléphone :</label>
+                <input type="tel" id="telephone" name="telephone" pattern="\d{9}" maxlength="9" title="Le numéro de téléphone doit contenir exactement 9 chiffres" required>
+                <span class="error-message">Ce champ est obligatoire et doit contenir exactement 9 chiffres.</span>
+            </div>
+            <div class="form-group">
+                <label for="telephoneUrgence">Téléphone d'urgence :</label>
+                <input type="tel" id="telephoneUrgence" name="telephoneUrgence" pattern="\d{9}" maxlength="9" title="Le numéro de téléphone d'urgence doit contenir exactement 9 chiffres" required>
+                <span class="error-message">Ce champ est obligatoire et doit contenir exactement 9 chiffres.</span>
+            </div>
+            <div class="form-group">
+                <label>Situation matrimoniale :</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="situationMatrimoniale" value="Célibataire" required> Célibataire</label>
+                    <label><input type="radio" name="situationMatrimoniale" value="Marié(e)" required> Marié(e)</label>
+                    <label><input type="radio" name="situationMatrimoniale" value="Divorcé(e)" required> Divorcé(e)</label>
+                    <label><input type="radio" name="situationMatrimoniale" value="Veuf(ve)" required> Veuf(ve)</label>
+                </div>
+                <span class="error-message" id="situationMatrimonialeError" style="display: none;">Ce champ est obligatoire.</span>
+            </div>
+            <div class="form-group">
+                <label for="cni">Numéro de la carte nationale d'identité (CNI) :</label>
+                <input type="text" id="cni" name="cni" pattern="\d{1,13}" maxlength="13" title="Le numéro CNI ne doit pas dépasser 13 chiffres" required>
+                <span class="error-message">Ce champ est obligatoire et ne doit pas dépasser 13 chiffres.</span>
+            </div>
+            <div class="form-group">
+                <label for="niveauEtude">Niveau d'étude :</label>
+                <select id="niveauEtude" name="niveauEtude" required>
+                    <option value="">Sélectionnez</option>
+                    <option value="Primaire">Primaire</option>
+                    <option value="Secondaire">Secondaire</option>
+                    <option value="Supérieur">Supérieur</option>
+                    <option value="Autre">Autre</option>
+                </select>
+                <span class="error-message">Ce champ est obligatoire.</span>
+            </div>
+            <div class="form-group">
+                <label for="travailActuel">Travail actuel :</label>
+                <input type="text" id="travailActuel" name="travailActuel" required>
+                <span class="error-message">Ce champ est obligatoire.</span>
+            </div>
+            <div class="form-group">
+                <label>Autorisation parentale :</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="autorisationParentale" value="Oui" required> Oui</label>
+                </div>
+                <span class="error-message" id="autorisationParentaleError" style="display: none;">Ce champ est obligatoire.</span>
+            </div>
+            <div class="form-group">
+                <label>Respect du règlement et du code de discipline :</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="respectReglement" value="Oui" required> J'accepte</label>
+                </div>
+                <span class="error-message" id="respectReglementError" style="display: none;">Ce champ est obligatoire.</span>
+            </div>
+            <div class="signatures">
+                <div class="signature">
+                    <p>Signature du responsable service d'ordre</p>
+                    <div class="signature-line"></div>
+                </div>
+                <div class="signature">
+                    <p>Signature du concerné</p>
+                    <div class="signature-line"></div>
+                </div>
+            </div>
+            <button type="submit">Soumettre</button>
+        </form>
+        
+    </div>
+    <script>
+        $(document).ready(function() {
+            // Animation d'entrée pour le header avec bounce
+            $('.header').addClass('show');
+            
+            // Animation d'entrée pour les logos avec rotation
+            setTimeout(function() {
+                $('.logos').addClass('show');
+            }, 300);
+            
+            // Animation d'entrée pour le conteneur du formulaire avec scale
+            setTimeout(function() {
+                $('.form-container').addClass('show');
+            }, 600);
+            
+            // Animation d'entrée pour chaque groupe de formulaire avec stagger et bounce
+            $('.form-group').each(function(index) {
+                $(this).delay(800 + index * 150).queue(function(next) {
+                    $(this).addClass('show');
+                    next();
+                });
+            });
+            
+            // Animation d'entrée pour les signatures
+            setTimeout(function() {
+                $('.signatures').addClass('show');
+            }, 2500);
+            
+            // Animation pour le bouton au clic
+            $('button').on('click', function() {
+                $(this).animate({
+                    scale: 0.95
+                }, 100).animate({
+                    scale: 1
+                }, 100);
+            });
+        });
+
+        // Fonction pour valider un champ individuel
+        function validateField(input) {
+            const errorSpan = input.nextElementSibling;
+            if (!input.value.trim()) {
+                errorSpan.style.display = 'block';
+            } else {
+                errorSpan.style.display = 'none';
+            }
+        }
+
+        // Ajouter des événements blur pour les champs texte, date, tel, select
+        document.querySelectorAll('input[type="text"], input[type="date"], input[type="tel"], select').forEach(input => {
+            input.addEventListener('blur', function() {
+                validateField(this);
+            });
+            input.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.nextElementSibling.style.display = 'none';
+                }
+            });
+        });
+
+        // Pour les radios, valider sur blur de chaque radio
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('blur', function() {
+                const name = this.name;
+                const checked = document.querySelector(`input[name="${name}"]:checked`);
+                const errorId = name + 'Error';
+                const errorSpan = document.getElementById(errorId);
+                if (!checked) {
+                    errorSpan.style.display = 'block';
+                } else {
+                    errorSpan.style.display = 'none';
+                }
+            });
+            radio.addEventListener('change', function() {
+                const name = this.name;
+                const errorId = name + 'Error';
+                const errorSpan = document.getElementById(errorId);
+                errorSpan.style.display = 'none';
+            });
+        });
+
+        // Pour les checkboxes, valider sur blur
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('blur', function() {
+                const name = this.name;
+                const checked = document.querySelector(`input[name="${name}"]:checked`);
+                const errorId = name + 'Error';
+                const errorSpan = document.getElementById(errorId);
+                if (!checked) {
+                    errorSpan.style.display = 'block';
+                } else {
+                    errorSpan.style.display = 'none';
+                }
+            });
+            checkbox.addEventListener('change', function() {
+                const name = this.name;
+                const errorId = name + 'Error';
+                const errorSpan = document.getElementById(errorId);
+                errorSpan.style.display = 'none';
+            });
+        });
+
+        document.getElementById('inscriptionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Masquer toutes les erreurs d'abord
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+            
+            let isValid = true;
+            
+            // Vérifier les champs texte, date, tel, select
+            const inputs = document.querySelectorAll('input[required], select[required]');
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.nextElementSibling.style.display = 'block';
+                    isValid = false;
+                } else if (input.type === 'tel' && !input.checkValidity()) {
+                    input.nextElementSibling.style.display = 'block';
+                    isValid = false;
+                } else if (input.name === 'cni' && !input.checkValidity()) {
+                    input.nextElementSibling.style.display = 'block';
+                    isValid = false;
+                }
+            });
+            
+            // Vérifier les radios
+            const groupeSanguin
+             = document.querySelector('input[name="groupeSanguin"]:checked');
+            if (!groupeSanguin) {
+                document.getElementById('groupeSanguinError').style.display = 'block';
+                isValid = false;
+            }
+            
+            const situationMatrimoniale = document.querySelector('input[name="situationMatrimoniale"]:checked');
+            if (!situationMatrimoniale) {
+                document.getElementById('situationMatrimonialeError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Vérifier les checkboxes
+            const autorisationParentale = document.querySelector('input[name="autorisationParentale"]:checked');
+            if (!autorisationParentale) {
+                document.getElementById('autorisationParentaleError').style.display = 'block';
+                isValid = false;
+            }
+            
+            const respectReglement = document.querySelector('input[name="respectReglement"]:checked');
+            if (!respectReglement) {
+                document.getElementById('respectReglementError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Collecter les données
+            const formData = new FormData(this);
+            let message = 'Nouvelle inscription :\n';
+            for (let [key, value] of formData.entries()) {
+                message += `${key}: ${value}\n`;
+            }
+            
+            // Encoder le message pour WhatsApp
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Numéro WhatsApp du responsable (remplacez par le vrai numéro, sans + ou espaces, ex: 221XXXXXXXXX pour le Sénégal)
+            const whatsappNumber = '221782079049'; // Remplacez par le numéro réel
+            
+            // Rediriger vers WhatsApp
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+            
+            // Afficher le message de succès
+            alert('Merci, formulaire rempli avec succès ! Les données ont été envoyées.');
+        });
+    </script>
+</body>
+</html>
