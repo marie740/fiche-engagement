@@ -174,22 +174,24 @@
             transform: scale(0.98);
         }
         /* Responsive design */
-        @media (max-width: 768px) {
+        @media (max-width: 600px) {
             .logos {
-                flex-direction: column;
-            }
-            .logos img {
-                width: 80px;
-                height: 80px;
-                margin: 10px 0;
-            }
+    flex-wrap: wrap;
+}
+
+           .logos img {
+    width: 40%;
+    height: auto;
+    padding: 5%;
+}
+
             .signatures {
                 flex-direction: column;
             }
             .signature {
-                width: 100%;
-                margin-bottom: 20px;
-            }
+                 width: 48%;
+                  font-size: 0.9rem;
+                 }
             .form-container {
                 padding: 15px;
             }
@@ -500,3 +502,4 @@
 </body>
 
 </html>
+
