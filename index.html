@@ -132,22 +132,12 @@
         .radio-group label:hover, .checkbox-group label:hover {
             color: #007bff;
         }
-        .signatures {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
+        .signatures { display: flex; justify-content: space-between; flex-wrap: nowrap;  }
         .signatures.show {
             opacity: 1;
             transform: translateY(0);
         }
-        .signature {
-            width: 45%;
-            text-align: center;
-        }
+         .signature { width: 48%; font-size: 0.9rem; text-align: center; }
         .signature-line {
             border-bottom: 1px solid #000;
             margin-top: 50px;
@@ -188,11 +178,9 @@
             .signatures {
     flex-wrap: wrap;
 }
+            .signature { width: 100%; margin-bottom: 20px; }
 
-            .signature {
-                 width: 48%;
-                  font-size: 0.9rem;
-                 }
+            
             .form-container {
                 padding: 15px;
             }
@@ -503,5 +491,6 @@
 </body>
 
 </html>
+
 
 
